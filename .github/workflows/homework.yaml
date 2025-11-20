@@ -22,9 +22,5 @@ jobs:
       - name: Install MySQL
         run: |
           sudo apt-get update && sudo apt-get install -y mysql-client
-      - name: MySQL version (client)
+      - name: MySQL version
         run: mysql --version
-      - name: MySQL query
-        run: |
-          sleep 5
-          mysql -h 127.0.0.1 -u root -proot -e 'SELECT VERSION();'
