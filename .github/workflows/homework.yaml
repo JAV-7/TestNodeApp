@@ -2,9 +2,24 @@ on: push
 jobs:
   homework-node:
     runs-on: ubuntu-latest
+    mysql:
+            image: mysql:8.0
+            env:
+              MYSQL_ROOT_PASSWORD: root
+              MYSQL_DATABASE: testdb
+            ports:
+              - 3306:3306
+            options: >-
+              --health-cmd="mysqladmin ping -h localhost"
+              --health-interval=10s
+              --health-timeout=5s
+              --health-retries=3
+
     container: mysql
     steps:
     - run: echo "HOMEWORK"
     - run: mysql --version
     - uses: actions/checkout@v3
-    - run: mysql -e 'SELECT VERSION();'
+    - run: 
+          sudo apt-get update && sudo apt-get install -y mysql-client
+          mysql -h 127.0.0.1 -u root -proot -e 'SELECT VERSION();'
